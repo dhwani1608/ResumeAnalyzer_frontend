@@ -67,6 +67,23 @@ export async function uploadResume(file: File, jobId?: string) {
   return res.json();
 }
 
+export async function uploadBatchZip(file: File, jobId?: string) {
+  const formData = new FormData();
+  formData.append('file', file);
+  if (jobId) {
+    formData.append('job_id', jobId);
+  }
+  
+  const token = typeof window !== 'undefined' ? localStorage.getItem('talent_token') : null;
+  const res = await fetch(`${API_URL}/batch-zip`, {
+    method: 'POST',
+    headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+    body: formData,
+  });
+  if (!res.ok) throw new Error('Failed to upload batch ZIP');
+  return res.json();
+}
+
 export async function createJob(description: string, title?: string) {
   const res = await fetch(`${API_URL}/jobs`, {
     method: 'POST',

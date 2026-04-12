@@ -1,156 +1,92 @@
 import Link from 'next/link';
+import { OrbitHero } from '@/components/ui/OrbitHero';
+import { ArrowRight, Zap, Target, Search } from 'lucide-react';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-bg-base text-text-primary flex flex-col">
-      {/* <Nav /> */}
-      <header className="flex items-center justify-between px-8 py-6 max-w-7xl mx-auto w-full">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="font-mono text-accent text-xl font-bold">T/</span>
-          <span className="font-display font-semibold text-lg tracking-tight">TalentOS</span>
+    <div className="min-h-screen bg-bg-base text-text-primary flex flex-col relative overflow-hidden font-outfit">
+      <header className="relative z-30 flex items-center justify-between px-10 py-10 max-w-7xl mx-auto w-full">
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="w-10 h-10 bg-slate-900 rounded-[12px] flex items-center justify-center text-white font-serif italic text-lg shadow-xl group-hover:bg-accent transition-all duration-500">
+            T/
+          </div>
+          <span className="font-display font-bold text-2xl tracking-tighter text-slate-900">TalentOS</span>
         </Link>
         <div className="flex items-center gap-6">
-          <Link href="/auth/login" className="text-sm font-medium hover:text-accent transition-colors">Sign in</Link>
-          <Link href="/auth/signup" className="px-4 py-2 bg-text-primary text-bg-base text-sm font-medium rounded-md hover:bg-bg-surface border border-transparent transition-all">Start for free</Link>
+          <Link href="/dashboard" className="px-8 py-3 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-accent transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.1)] active:scale-95">
+            Launch Dashboard
+          </Link>
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col items-center pt-20">
-        {/* <Hero /> */}
-        <section className="flex flex-col items-center justify-center px-6 text-center w-full max-w-5xl mx-auto">
-          <div style={{ display: 'inline-flex', alignItems: 'center', border: '1px solid #3A3B44', background: '#141518', borderRadius: '9999px', padding: '4px 12px', fontSize: '12px', color: '#8A8B96', letterSpacing: '0.04em', marginBottom: '24px' }}>
-            Multi-agent resume intelligence — now in beta
+      <main className="relative z-10 flex-1 flex flex-col pt-20">
+        <section className="flex flex-col md:flex-row items-center justify-between px-10 max-w-7xl mx-auto w-full gap-20">
+          <div className="flex-1 space-y-10 text-left">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+              Intelligence for Modern Hiring
+            </div>
+
+            <h1 className="text-7xl lg:text-8xl font-serif leading-[0.95] tracking-tight text-slate-900">
+              Decode the <br />
+              <span className="italic vibrant-text">DNA of Talent.</span>
+            </h1>
+
+            <p className="text-xl text-slate-500 max-w-lg leading-relaxed font-medium">
+              TalentOS maps semantic workspaces, computes career trajectories, and ranks matches with orbital precision.
+            </p>
+
+            <div className="flex items-center gap-6">
+              <Link href="/upload" className="px-10 py-5 bg-accent text-white rounded-full font-bold shadow-[0_20px_40px_rgba(109,40,217,0.2)] hover:shadow-[0_25px_50px_rgba(109,40,217,0.3)] hover:-translate-y-1 transition-all flex items-center gap-3 group">
+                Upload Resume <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
           </div>
 
-          <h1 className="text-[clamp(48px,7vw,80px)] font-semibold tracking-[-0.03em] leading-[1.05] text-text-primary max-w-[800px]">
-            Your next hire is{' '}
-            <span style={{ color: '#5E6AD2', background: '#1E2047', borderRadius: '4px', padding: '0 8px', display: 'inline' }}>
-              already
-            </span>
-            {' '}in your inbox.
-          </h1>
-
-          <p className="text-[18px] text-text-muted max-w-[520px] mx-auto leading-relaxed mt-5">
-            TalentOS reads every resume the moment it lands.
-            Parsed, ranked, and waiting — before you open Slack.
-          </p>
-
-          <div className="mt-10 flex items-center justify-center gap-4">
-            <Link href="/auth/signup" className="px-6 py-3 bg-accent text-[#0E0F11] text-sm font-medium rounded-md hover:bg-accent-hover transition-colors">
-              Start for free
-            </Link>
-            <Link href="#how-it-works" className="px-6 py-3 border border-border-strong text-text-primary text-sm font-medium rounded-md hover:bg-bg-hover transition-colors">
-              See how it works
-            </Link>
-          </div>
-        </section>
-
-        {/* <ProblemStrip /> */}
-        <section className="border-y border-border-strong bg-bg-surface py-12 mt-24 w-full">
-          <div className="max-w-4xl mx-auto flex sm:grid sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-border-strong flex-col text-center">
-            {[
-              { n: '250', label: 'avg resumes per open role' },
-              { n: '11hrs', label: 'per week lost to manual screening' },
-              { n: '34%', label: 'of qualified candidates never seen' },
-            ].map(({ n, label }) => (
-              <div key={n} className="py-8 sm:py-0 px-8">
-                <p className="font-mono text-5xl font-semibold text-text-primary tracking-tight">{n}</p>
-                <p className="text-xs text-text-muted font-mono mt-2 leading-relaxed">{label}</p>
-              </div>
-            ))}
+          <div className="flex-1 relative hidden lg:block">
+            <OrbitHero />
           </div>
         </section>
 
-        {/* <HowItWorks /> */}
-        <section id="how-it-works" className="w-full max-w-6xl mx-auto py-32 px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-display font-semibold tracking-tight">How the agents work</h2>
-            <p className="text-text-secondary mt-3">Three specialized models working in parallel on every resume.</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-bg-surface border border-border-strong p-8 rounded-sm">
-              <span className="font-mono text-accent text-xs tracking-wide-caps">01 / Parser</span>
-              <h3 className="text-xl font-medium mt-4 mb-2">Structure the Chaos</h3>
-              <p className="text-text-secondary text-sm leading-relaxed">Extracts work history, normalizes job titles, and converts obscure formats into a clean schema.</p>
-            </div>
-            <div className="bg-bg-elevated border border-border-strong p-8 rounded-sm shadow-xl relative -mt-4 mb-4">
-              <div className="absolute top-0 inset-x-0 h-1 bg-accent rounded-t-sm" />
-              <span className="font-mono text-accent text-xs tracking-wide-caps">02 / Matcher</span>
-              <h3 className="text-xl font-medium mt-4 mb-2">Score against JD</h3>
-              <p className="text-text-secondary text-sm leading-relaxed">Computes semantic similarity across 40 dimensions of technical and soft requirements.</p>
-            </div>
-            <div className="bg-bg-surface border border-border-strong p-8 rounded-sm">
-              <span className="font-mono text-accent text-xs tracking-wide-caps">03 / Analyst</span>
-              <h3 className="text-xl font-medium mt-4 mb-2">Gap Analysis</h3>
-              <p className="text-text-secondary text-sm leading-relaxed">Highlights missing skills, identifies career gaps, and prepares custom technical screening questions.</p>
-            </div>
-          </div>
-        </section>
-
-        {/* <FeaturedDemo /> */}
-        <section className="w-full max-w-5xl mx-auto px-6 pb-32">
-          <div className="rounded-xl border border-border-strong bg-bg-base overflow-hidden">
-            <div className="h-10 border-b border-border-strong bg-bg-surface flex items-center px-4 gap-2">
-              <div className="w-3 h-3 rounded-full bg-border-strong" />
-              <div className="w-3 h-3 rounded-full bg-border-strong" />
-              <div className="w-3 h-3 rounded-full bg-border-strong" />
-              <div className="mx-auto bg-bg-base border border-border-strong rounded-md h-6 w-64" />
-            </div>
-            <div className="aspect-[16/9] bg-bg-surface relative flex items-center justify-center">
-              <div className="text-text-muted font-mono text-sm border border-dashed border-border-strong p-12 rounded">
-                [ Interactive Dashboard Demo ]
+        {/* HopeRise Style Value Props */}
+        <section className="mt-40 grid grid-cols-1 md:grid-cols-3 gap-8 px-10 max-w-7xl mx-auto w-full pb-32">
+          {[
+            { 
+              title: "Rapid Ingestion", 
+              desc: "From PDF to structured vector nodes in under 800ms.",
+              icon: Zap,
+              color: "bg-blue-50 text-blue-600"
+            },
+            { 
+              title: "Semantic Drift", 
+              desc: "Measure the exact distance between skillsets and job needs.",
+              icon: Target,
+              color: "bg-violet-50 text-violet-600"
+            },
+            { 
+              title: "Deep Search", 
+              desc: "Query your talent pool using natural language intent.",
+              icon: Search,
+              color: "bg-emerald-50 text-emerald-600"
+            }
+          ].map((feature, i) => (
+            <div key={i} className="glass-card hover:bg-white transition-all duration-700">
+              <div className={`w-14 h-14 rounded-2xl ${feature.color} flex items-center justify-center mb-6 shadow-sm`}>
+                <feature.icon className="w-6 h-6" />
               </div>
+              <h3 className="text-2xl font-serif font-bold text-slate-900 mb-3">{feature.title}</h3>
+              <p className="text-slate-500 font-medium leading-relaxed">{feature.desc}</p>
             </div>
-          </div>
-        </section>
-
-        {/* <Pricing /> */}
-        <section className="w-full bg-bg-surface border-y border-border-strong py-32">
-          <div className="max-w-5xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-display font-semibold tracking-tight">Simple, transparent pricing</h2>
-            </div>
-            <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-              <div className="border border-border-strong bg-bg-base p-8 rounded-md flex flex-col">
-                <h3 className="text-xl font-medium mb-2">Free</h3>
-                <div className="text-4xl font-semibold tracking-tight mb-4">$0<span className="text-base text-text-muted font-normal">/mo</span></div>
-                <p className="text-sm text-text-secondary mb-8">Perfect for exploring the platform.</p>
-                <ul className="space-y-4 mb-8 flex-1 text-sm text-text-secondary">
-                  <li className="flex items-center gap-2">• 3 Active Roles</li>
-                  <li className="flex items-center gap-2">• 50 Candidates tracked</li>
-                  <li className="flex items-center gap-2">• Standard Parsing</li>
-                </ul>
-                <Link href="/auth/signup" className="block text-center w-full py-3 border border-border-strong bg-bg-surface hover:bg-bg-hover text-sm font-medium rounded transition-colors">Start for free</Link>
-              </div>
-
-              <div className="border border-accent bg-bg-elevated p-8 rounded-md flex flex-col relative shadow-xl">
-                <div className="absolute top-0 right-8 -translate-y-1/2 bg-accent text-[#0E0F11] font-mono text-[10px] tracking-wide-caps font-bold px-2 py-0.5 rounded">FEATURED</div>
-                <h3 className="text-xl font-medium mb-2 text-accent">Scale</h3>
-                <div className="text-4xl font-semibold tracking-tight mb-4">$79<span className="text-base text-text-muted font-normal">/mo</span></div>
-                <p className="text-sm text-text-secondary mb-8">For serious hiring pipelines.</p>
-                <ul className="space-y-4 mb-8 flex-1 text-sm text-text-secondary">
-                  <li className="flex items-center gap-2 text-text-primary">• Unlimited Roles</li>
-                  <li className="flex items-center gap-2 text-text-primary">• Unlimited Candidates</li>
-                  <li className="flex items-center gap-2 text-text-primary">• Advanced AI Gap Analysis</li>
-                </ul>
-                <Link href="/dashboard" className="block text-center w-full py-3 bg-accent text-[#0E0F11] hover:bg-accent-hover text-sm font-medium rounded transition-colors">Start Scale Trial</Link>
-              </div>
-            </div>
-          </div>
+          ))}
         </section>
       </main>
 
-      {/* <Footer /> */}
-      <footer className="w-full max-w-7xl mx-auto px-8 py-12 flex flex-col md:flex-row items-center justify-between gap-6 border-t border-border-strong mt-auto">
-        <div className="flex items-center gap-2">
-          <span className="font-mono text-text-muted font-bold">T/</span>
-          <span className="font-display font-medium text-text-secondary">TalentOS &copy; 2026</span>
-        </div>
-        <div className="flex items-center gap-6 text-sm text-text-muted">
-          <Link href="/dashboard" className="hover:text-text-primary transition-colors">Dashboard</Link>
-          <Link href="/jobs" className="hover:text-text-primary transition-colors">Jobs</Link>
-          <Link href="/upload" className="hover:text-text-primary transition-colors">Upload</Link>
-          <Link href="/dashboard" className="hover:text-text-primary transition-colors">Terms of Service</Link>
+      <footer className="px-10 py-16 border-t border-slate-100 max-w-7xl mx-auto w-full flex justify-between items-center bg-transparent">
+        <div className="text-sm font-bold text-slate-400">© 2026 TalentOS. Optimized for Precision.</div>
+        <div className="flex gap-8 text-sm font-bold text-slate-400">
+          <Link href="/dashboard" className="hover:text-accent transition-colors">Platform</Link>
+          <Link href="/upload" className="hover:text-accent transition-colors">Resources</Link>
+          <Link href="#" className="hover:text-accent transition-colors">Legal</Link>
         </div>
       </footer>
     </div>

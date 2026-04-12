@@ -15,15 +15,16 @@ export function Sidebar({ className }: { className?: string }) {
     { label: 'Candidates', href: '/candidates', icon: Users },
     { label: 'Upload', href: '/upload', icon: Upload },
     { label: 'Taxonomy', href: '/taxonomy', icon: Layers },
-    { label: 'Settings', href: '/settings', icon: Settings },
   ];
 
   return (
-    <div className={cn("w-[240px] flex-shrink-0 flex flex-col h-screen border-r border-border bg-bg-base", className)}>
-      <div className="p-6">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="font-mono text-accent text-xl font-bold">T/</span>
-          <span className="font-display font-semibold text-lg tracking-tight">TalentOS</span>
+    <div className={cn("w-[260px] flex-shrink-0 flex flex-col h-screen border-r border-slate-100 bg-white/40 backdrop-blur-xl relative z-20", className)}>
+      <div className="p-8">
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-mono text-sm font-bold group-hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200">
+            T/
+          </div>
+          <span className="font-display font-bold text-xl tracking-tight text-slate-900">TalentOS</span>
         </Link>
       </div>
       
@@ -35,10 +36,10 @@ export function Sidebar({ className }: { className?: string }) {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-[10px] px-4 py-2 rounded-md mx-2 text-sm font-medium transition-colors ${
+              className={`flex items-center gap-3 px-4 py-2.5 rounded-xl mx-2 text-sm font-medium transition-all ${
                 isActive 
-                  ? 'bg-bg-hover text-text-primary [&>svg]:text-accent' 
-                  : 'text-text-secondary hover:bg-bg-elevated hover:text-text-primary'
+                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-200/50' 
+                  : 'text-slate-500 hover:bg-white hover:text-slate-900 hover:shadow-sm'
               }`}
             >
               <item.icon className="w-4 h-4" />
@@ -49,25 +50,15 @@ export function Sidebar({ className }: { className?: string }) {
       </div>
 
       <div className="p-4 border-t border-border-strong mt-auto space-y-4">
-        {session?.user && (
-          <div className="flex items-center gap-3 px-2 py-3 bg-bg-elevated rounded-md border border-border-strong">
-            <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-accent text-xs font-mono">
-              {session.user.name?.[0] || 'U'}
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-xs font-medium text-text-primary truncate">{session.user.name}</div>
-              <div className="text-[10px] text-text-muted truncate">{session.user.email}</div>
-            </div>
+        <div className="flex items-center gap-3 px-3 py-3 bg-white/50 rounded-2xl border border-white shadow-sm ring-1 ring-slate-200/50">
+          <div className="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 text-xs font-bold border border-blue-100 italic font-serif">
+            G
           </div>
-        )}
-        
-        <button 
-          onClick={() => signOut({ callbackUrl: '/auth/login' })}
-          className="flex w-full items-center gap-[10px] px-3 py-2 rounded-md text-xs font-medium text-text-muted hover:bg-score-low/10 hover:text-score-low transition-colors"
-        >
-          <LogOut className="w-3.5 h-3.5" />
-          Sign Out
-        </button>
+          <div className="flex-1 min-w-0">
+            <div className="text-xs font-bold text-slate-900 truncate">Guest User</div>
+            <div className="text-[10px] text-slate-400 truncate font-medium">Anonymous Session</div>
+          </div>
+        </div>
 
         <div className="pt-2">
           <div className="text-[10px] font-mono text-text-muted mb-2 tracking-wide-caps uppercase">Pipeline</div>

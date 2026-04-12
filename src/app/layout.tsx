@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Outfit, EB_Garamond } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { GeistSans } from 'geist/font/sans';
@@ -8,6 +8,8 @@ import ReactQueryProvider from '@/components/providers/ReactQueryProvider';
 import AuthProvider from '@/components/providers/AuthProvider';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-body' });
+const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
+const ebGaramond = EB_Garamond({ subsets: ['latin'], variable: '--font-display' });
 
 export const metadata: Metadata = {
   title: 'TalentOS | Recruiter Intelligence Dashboard',
@@ -20,11 +22,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="light">
       <body
         className={cn(
-          'min-h-screen bg-bg-base text-text-primary antialiased',
+          'min-h-screen bg-bg-base text-text-primary antialiased selection:bg-accent/10 selection:text-accent',
           inter.variable,
+          outfit.variable,
+          ebGaramond.variable,
           GeistSans.variable,
           GeistMono.variable
         )}

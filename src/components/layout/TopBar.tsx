@@ -3,18 +3,18 @@ import { cn } from "@/lib/utils";
 
 export function TopBar({ breadcrumb = "Dashboard", className }: { breadcrumb?: React.ReactNode, className?: string }) {
   return (
-    <div className={cn("h-14 border-b border-border flex items-center justify-between px-6 bg-bg-base", className)}>
-      <div className="text-sm font-medium text-text-secondary">
+    <div className={cn("h-20 border-b border-slate-100 flex items-center justify-between px-10 bg-white/40 backdrop-blur-xl relative z-10", className)}>
+      <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">
         {breadcrumb}
       </div>
       
       <div className="flex-1 max-w-md mx-6">
         <div className="relative group">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted group-focus-within:text-accent transition-colors" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-blue-600 transition-colors" />
           <input 
             type="text"
-            placeholder="Find candidates, jobs, skills... (⌘K)"
-            className="w-full bg-bg-surface border border-border-strong rounded-md py-1.5 pl-9 pr-4 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all"
+            placeholder="Search candidates..."
+            className="w-full bg-white border border-slate-100 rounded-2xl py-2.5 pl-11 pr-4 text-sm text-slate-900 placeholder:text-slate-300 focus:outline-none focus:border-blue-200 focus:ring-4 focus:ring-blue-50 transition-all shadow-sm"
           />
         </div>
       </div>

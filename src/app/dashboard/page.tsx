@@ -3,6 +3,7 @@
 import { PageShell } from "@/components/layout/PageShell";
 import { StatCard } from "@/components/ui/StatCard";
 import { ScorePill } from "@/components/ui/ScorePill";
+import { OrbitHero } from "@/components/ui/OrbitHero";
 import { ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
@@ -23,18 +24,26 @@ export default function Dashboard() {
   ];
 
   const matches = candidates.slice(0, 4).map((c: any) => ({
-    id: c.id,
-    initials: (c.name || "U").substring(0, 2).toUpperCase(),
-    name: c.name || "Unknown",
-    role: "Candidate",
-    score: 85
+    candidate_id: c.id,
+    candidate_name: c.name || "Unknown Candidate",
+    job_title: c.summary?.substring(0, 30) + "..." || "Candidate",
+    score: c.match_score || 0.85
   }));
 
   return (
     <PageShell breadcrumb="Overview">
-      <div className="p-8 max-w-[1400px] mx-auto space-y-8">
+      <div className="p-10 max-w-[1500px] mx-auto space-y-16 relative">
         
-        {/* Top Stat Cards */}
+        {/* Background Orbit Accent */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] -mr-64 -mt-32 opacity-10 pointer-events-none">
+          <OrbitHero />
+        </div>
+
+        {/* Vibrant Header Greeting */}
+        <div className="flex flex-col space-y-3 relative z-10">
+          <h1 className="text-6xl font-serif font-bold vibrant-text">Welcome back, Guest Scout.</h1>
+          <p className="text-slate-500 font-medium text-lg ml-1">The intelligence pipeline is healthy and active.</p>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {stats.map((s, i) => (
             <StatCard 
@@ -54,25 +63,28 @@ export default function Dashboard() {
           {/* Main Left - Top Matches */}
           <div className="lg:col-span-8 flex flex-col space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-display tracking-tight font-semibold text-text-primary">Top Matches Today</h2>
-              <span className="text-[10px] font-mono text-text-muted tracking-wide-caps">UPDATED 4 MIN AGO</span>
+              <h2 className="text-xl font-display font-bold text-slate-900">Top Matches Today</h2>
+              <span className="text-[10px] font-bold text-slate-400 tracking-widest uppercase">4m ago</span>
             </div>
-            <div className="bg-bg-surface border border-border-strong rounded-sm overflow-hidden divide-y divide-border-strong">
+            <div className="space-y-4">
               {matches.map((m: any, i: number) => (
-                <div key={i} className="group p-4 flex items-center justify-between hover:bg-bg-hover transition-colors cursor-pointer">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-accent-subtle flex items-center justify-center text-accent text-sm font-medium font-mono border border-accent/20">
-                      {m.initials}
+                <div key={i} className="glass-card flex items-center justify-between group p-7">
+                  <div className="flex items-center gap-6">
+                    <div className="w-16 h-16 rounded-[24px] bg-slate-50 border border-slate-100 flex items-center justify-center text-2xl font-serif italic text-slate-400 group-hover:bg-accent group-hover:text-white transition-all duration-500 shadow-sm">
+                      {(m.candidate_name || "U")[0]}
                     </div>
                     <div>
-                      <div className="text-sm font-medium text-text-primary">{m.name}</div>
-                      <div className="text-xs text-text-secondary mt-0.5">{m.role}</div>
+                      <div className="text-xl font-serif font-bold text-slate-900 mb-1">{m.candidate_name}</div>
+                      <div className="text-sm font-bold text-slate-400 uppercase tracking-widest">{m.job_title}</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-6">
-                    <ScorePill score={m.score} />
-                    <Link href={`/candidates/${m.id}`} className="flex items-center gap-1 text-xs font-mono tracking-wide-caps text-accent opacity-0 group-hover:opacity-100 transition-opacity">
-                      Review <ArrowRight className="w-3 h-3" />
+                  <div className="flex items-center gap-8">
+                    <div className="text-right">
+                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">Semantic Match</div>
+                      <ScorePill score={Math.round(m.score * 100)} />
+                    </div>
+                    <Link href={`/candidates/${m.candidate_id}`} className="w-14 h-14 rounded-[20px] bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-300 group-hover:bg-slate-900 group-hover:text-white transition-all shadow-sm">
+                      <ArrowRight className="w-5 h-5" />
                     </Link>
                   </div>
                 </div>
@@ -83,8 +95,8 @@ export default function Dashboard() {
           {/* Main Right - Pipeline Pulse & Uploads */}
           <div className="lg:col-span-4 flex flex-col space-y-8">
             <div className="space-y-4">
-              <h2 className="text-lg font-display tracking-tight font-semibold text-text-primary">Pipeline Pulse</h2>
-              <div className="bg-bg-surface border border-border-strong p-6 rounded-sm">
+              <h2 className="text-xl font-display font-bold text-slate-900">Pipeline Pulse</h2>
+              <div className="glass p-6 rounded-2xl shadow-xl border-white/50">
                 <div className="space-y-5">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-text-secondary">Applied</span>
@@ -119,16 +131,37 @@ export default function Dashboard() {
             </div>
 
             <div className="space-y-4">
-              <h2 className="text-lg font-display tracking-tight font-semibold text-text-primary">Recent Uploads</h2>
-              <div className="space-y-2">
-                {candidates.length > 0 ? candidates.slice(0, 4).map((c: any) => (
-                  <Link href={`/candidates/${c.id}`} key={c.id} className="flex items-center justify-between py-2.5 px-3 bg-bg-surface border border-border-strong rounded-sm hover:border-text-muted transition-colors cursor-pointer">
-                    <span className="text-xs font-mono text-text-secondary truncate block max-w-[150px]">{c.name || "resume.pdf"}</span>
-                    <span className="text-[10px] tracking-wide-caps font-mono px-1.5 py-0.5 rounded text-score-high">PARSED</span>
-                  </Link>
-                )) : (
-                  <div className="text-sm text-text-muted py-4 text-center">No recent uploads</div>
-                )}
+              <h2 className="text-xl font-display font-bold text-slate-900">Recent Activity</h2>
+              <div className="glass-card space-y-4 p-5">
+                {[
+                  { action: "Resume Parsed", subject: "John Doe", time: "2m ago", icon: "📄" },
+                  { action: "Match Score", subject: "Jane Smith (85%)", time: "1h ago", icon: "🎯" },
+                  { action: "Job Created", subject: "Senior Frontend dev", time: "4h ago", icon: "💼" },
+                ].map((act, i) => (
+                  <div key={i} className="flex items-center gap-4 group">
+                    <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:bg-blue-50 group-hover:border-blue-100 transition-colors">
+                      {act.icon}
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-sm font-bold text-slate-900">{act.action}</div>
+                      <div className="text-xs text-slate-500 font-medium">{act.subject}</div>
+                    </div>
+                    <div className="text-[10px] font-bold text-slate-400 uppercase">{act.time}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h2 className="text-xl font-display font-bold text-slate-900">Queue Watch</h2>
+              <div className="glass-card p-5 space-y-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium text-slate-600">Processing Resumes</span>
+                  <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">12 active</span>
+                </div>
+                <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                  <div className="w-2/3 h-full bg-gradient-to-r from-blue-500 to-violet-500 animate-pulse" />
+                </div>
               </div>
             </div>
           </div>

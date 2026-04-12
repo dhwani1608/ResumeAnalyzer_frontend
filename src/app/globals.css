@@ -4,27 +4,29 @@
 
 @layer base {
   :root {
-    --bg-base: #0E0F11;
-    --bg-surface: #141518;
-    --bg-elevated: #1C1D21;
-    --bg-hover: #22232A;
-    --border: #2A2B32;
-    --border-strong: #3A3B44;
+    --bg-base: #FAF9F6; /* Creamy White - HopeRise Style */
+    --bg-surface: rgba(255, 255, 255, 0.85);
+    --bg-elevated: #FFFFFF;
+    --bg-hover: #F2F1ED;
+    --border: rgba(0, 0, 0, 0.05); /* Very subtle border */
+    --border-strong: rgba(0, 0, 0, 0.1);
 
-    --text-primary: #F0F0F2;
-    --text-secondary: #8A8B96;
-    --text-muted: #55566A;
+    --text-primary: #1A1A1A;
+    --text-secondary: #525252;
+    --text-muted: #A3A3A3;
 
-    --accent: #5E6AD2;
-    --accent-hover: #6E7BE0;
-    --accent-subtle: #1E2047;
+    --accent: #6D28D9; /* Premium Violet */
+    --accent-vibrant: #7C3AED;
+    --accent-glow: #06B6D4;
+    --accent-hover: #5B21B6;
+    --accent-subtle: #F5F3FF;
 
-    --score-high: #34C770;
-    --score-mid: #F5A623;
-    --score-low: #E85454;
+    --score-high: #059669; /* Forest Green - HopeRise Style */
+    --score-mid: #D97706;
+    --score-low: #DC2626;
 
-    --tag-bg: #1E1F26;
-    --tag-border: #2E2F3A;
+    --tag-bg: #F2F1ED;
+    --tag-border: rgba(0, 0, 0, 0.05);
   }
 
   body {
@@ -46,5 +48,38 @@
   .tracking-wide-caps {
     letter-spacing: 0.04em;
     text-transform: uppercase;
+  }
+  .glass {
+    @apply bg-white/70 backdrop-blur-3xl border border-white/40 shadow-[0_8px_32px_0_rgba(15,23,42,0.04)];
+  }
+
+  .glass-card {
+    @apply bg-white/90 backdrop-blur-2xl border border-white/50 shadow-[0_20px_50px_rgba(0,0,0,0.03)] rounded-[32px] p-8 transition-all hover:scale-[1.01] hover:shadow-[0_40px_80px_rgba(0,0,0,0.06)];
+  }
+
+  .vibrant-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-500;
+  }
+
+  .floating {
+    @apply animate-[float_8s_ease-in-out_infinite];
+  }
+
+  .orbit-container {
+    @apply relative flex items-center justify-center overflow-hidden;
+  }
+
+  .orbit-ring {
+    @apply absolute border border-slate-200/40 rounded-full animate-[spin_var(--duration)_linear_infinite];
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(1deg); }
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 }

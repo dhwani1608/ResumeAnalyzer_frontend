@@ -3,21 +3,21 @@ interface Props { score: number }
 export function ScorePill({ score }: Props) {
   const styles =
     score >= 75
-      ? { bg: '#0D3320', color: '#34C770', border: '#1A5C38' }
+      ? { bg: '#ECFDF5', color: '#059669', border: '#10B98133' }
       : score >= 50
-      ? { bg: '#2D1F00', color: '#F5A623', border: '#5C3D00' }
-      : { bg: '#2D0A0A', color: '#E85454', border: '#5C1414' }
+      ? { bg: '#FFFBEB', color: '#D97706', border: '#F59E0B33' }
+      : { bg: '#FEF2F2', color: '#DC2626', border: '#EF444433' }
 
   return (
     <span style={{
       background: styles.bg,
       color: styles.color,
       border: `1px solid ${styles.border}`,
-      borderRadius: '4px',
-      padding: '2px 8px',
-      fontSize: '12px',
-      fontFamily: 'var(--font-mono, monospace)',
-      fontWeight: 600,
+      borderRadius: '9999px',
+      padding: '2px 10px',
+      fontSize: '11px',
+      fontFamily: 'var(--font-outfit, sans-serif)',
+      fontWeight: 700,
       display: 'inline-block',
       letterSpacing: '0.02em',
     }}>

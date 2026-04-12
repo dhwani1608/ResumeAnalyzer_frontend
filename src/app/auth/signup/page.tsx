@@ -43,8 +43,12 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-bg-base flex flex-col justify-center items-center p-4">
-      <div className="w-full max-w-sm">
+    <div className="min-h-screen bg-[#F8FAFC] flex flex-col justify-center items-center p-4 relative overflow-hidden font-outfit">
+      {/* Background Decor */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-100/40 rounded-full blur-[120px]" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-50/50 rounded-full blur-[120px]" />
+
+      <div className="w-full max-w-sm relative z-10">
         <div className="flex items-center gap-2 mb-8 justify-center">
             <div className="w-8 h-8 rounded bg-ink flex items-center justify-center text-[#0E0F11] font-semibold text-xl">
               T
@@ -52,9 +56,9 @@ export default function SignupPage() {
             <span className="text-xl font-display font-semibold tracking-tight text-text-primary">TalentOS</span>
         </div>
 
-        <div className="bg-bg-surface border border-border-strong p-8 rounded-md shadow-sm">
-          <h2 className="text-xl font-display font-semibold text-text-primary mb-2 text-center">Create account</h2>
-          <p className="text-sm text-text-secondary mb-6 text-center">Get started with TalentOS.</p>
+        <div className="glass p-8 rounded-2xl shadow-xl border-white/50">
+          <h2 className="text-2xl font-display font-bold text-slate-900 mb-2 text-center">Create account</h2>
+          <p className="text-sm text-slate-500 mb-8 text-center">Get started with TalentOS.</p>
           
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1">
@@ -69,8 +73,8 @@ export default function SignupPage() {
               <label className="text-sm font-medium text-text-primary">Password</label>
               <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" required className="w-full bg-bg-base border border-border-strong p-2 rounded text-sm text-text-primary focus:outline-none focus:border-accent" />
             </div>
-            <button disabled={loading} type="submit" className="w-full bg-accent text-[#0E0F11] font-medium py-2 rounded text-sm hover:bg-accent-hover transition-colors flex items-center justify-center gap-2 mt-4">
-              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Sign up"}
+            <button disabled={loading} type="submit" className="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl text-sm hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 flex items-center justify-center gap-2 mt-6 active:scale-[0.98]">
+              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Create Account"}
             </button>
           </form>
           
