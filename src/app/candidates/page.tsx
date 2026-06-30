@@ -2,7 +2,7 @@
 
 import { PageShell } from "@/components/layout/PageShell";
 import { ScorePill } from "@/components/ui/ScorePill";
-import { Users, Search, Filter, ArrowRight } from "lucide-react";
+import { Users, Search, Filter, ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCandidates } from "@/lib/api/intelligence";
@@ -17,68 +17,68 @@ export default function CandidatesPage() {
 
   return (
     <PageShell breadcrumb="Candidates">
-      <div className="p-8 max-w-[1400px] mx-auto space-y-10">
+      <div className="p-12 max-w-[1500px] mx-auto space-y-12 bg-[var(--bg-base)]">
         
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2">
-            <h1 className="text-4xl font-display font-bold vibrant-text">Candidate Pool</h1>
-            <p className="text-slate-500 font-medium">Manage and review your talent database.</p>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+          <div className="space-y-3 font-mono">
+            <h1 className="text-5xl font-bold tracking-tighter text-[var(--text-on-dark)] uppercase">Talent Reservoir</h1>
+            <p className="text-gray-500 font-medium text-lg">Inventory of {candidates.length} processed high-potential scouts.</p>
           </div>
           
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <div className="flex items-center gap-4">
+            <div className="relative group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-[var(--accent)] transition-colors" />
               <input 
                 type="text" 
-                placeholder="Search candidates..."
-                className="bg-white border border-slate-200 rounded-2xl py-2 pl-10 pr-4 text-sm focus:ring-4 focus:ring-blue-50 outline-none transition-all w-64 shadow-sm"
+                placeholder="PROBE CANDIDATES..."
+                className="bg-[var(--bg-sidebar)] border border-white/5 rounded-[var(--radius-lg)] py-3.5 pl-12 pr-6 text-sm text-white focus:border-[var(--accent)] outline-none transition-all w-72 shadow-2xl font-mono"
               />
             </div>
-            <button className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-2xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all shadow-sm">
+            <button className="flex items-center gap-2 px-5 py-3.5 bg-[var(--bg-sidebar)] border border-white/5 rounded-[var(--radius-lg)] text-[10px] font-bold text-gray-400 uppercase tracking-widest hover:bg-[var(--bg-sidebar)]/80 hover:text-white transition-all shadow-xl font-mono">
               <Filter className="w-4 h-4" /> Filter
             </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 gap-6">
           {isLoading ? (
-            <div className="flex items-center justify-center p-20 glass rounded-3xl">
-              <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+            <div className="flex items-center justify-center p-32 bg-[var(--bg-sidebar)]/30 border border-dashed border-white/5 rounded-[var(--radius-xl)]">
+              <Loader2 className="w-10 h-10 text-[var(--accent)] animate-spin" />
             </div>
           ) : candidates.length > 0 ? (
             candidates.map((c: any) => (
-              <div key={c.id} className="glass-card group flex items-center justify-between">
-                <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-blue-200 floating">
+              <div key={c.id} className="bg-[var(--bg-surface)] p-8 rounded-[var(--radius-lg)] border border-[var(--border)] shadow-sm group hover:shadow-2xl transition-all flex items-center justify-between">
+                <div className="flex items-center gap-8">
+                  <div className="w-20 h-20 rounded-[var(--radius-lg)] bg-[var(--bg-sidebar)] flex items-center justify-center text-[var(--accent)] text-2xl font-bold border border-white/5 group-hover:scale-105 transition-all">
                     {(c.name || "U")[0]}
                   </div>
                   <div>
-                    <div className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">{c.name || "Unnamed Candidate"}</div>
-                    <div className="text-sm text-slate-500 font-medium">{c.location || "Remote"} • {c.experience_years || 0} years exp.</div>
-                    <div className="flex gap-2 mt-2">
-                      {c.skills?.slice(0, 3).map((s: string, i: number) => (
-                        <span key={i} className="px-2 py-0.5 bg-slate-100 text-[10px] font-bold text-slate-500 rounded-lg uppercase tracking-wider">{s}</span>
+                    <div className="text-xl font-bold text-[var(--text-primary)] group-hover:text-[var(--bg-sidebar)] transition-colors mb-1">{c.name || "Unnamed Candidate"}</div>
+                    <div className="text-[10px] text-gray-400 font-bold uppercase tracking-widest font-mono">{c.location || "REMOTE"} • {c.experience_years || 0} YRS_EXP.</div>
+                    <div className="flex gap-2 mt-4">
+                      {c.skills?.slice(0, 4).map((s: string, i: number) => (
+                        <span key={i} className="px-3 py-1.5 bg-gray-50 text-[9px] font-bold text-gray-500 rounded-lg uppercase tracking-widest font-mono border border-gray-100">{s}</span>
                       ))}
                     </div>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-8">
+                <div className="flex items-center gap-12">
                   <div className="text-right">
-                    <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Match Score</div>
-                    <ScorePill score={85} />
+                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-2 font-mono">Match Intelligence</div>
+                    <ScorePill score={c.match_score ? Math.round(c.match_score * 100) : 85} />
                   </div>
-                  <Link href={`/candidates/${c.id}`} className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-500 transition-all shadow-sm">
+                  <Link href={`/candidates/${c.id}`} className="w-14 h-14 rounded-[var(--radius-lg)] bg-[var(--bg-sidebar)] border border-white/5 flex items-center justify-center text-white hover:bg-[var(--accent)] hover:text-[var(--bg-sidebar)] transition-all shadow-2xl">
                     <ArrowRight className="w-5 h-5" />
                   </Link>
                 </div>
               </div>
             ))
           ) : (
-            <div className="text-center py-20 glass rounded-3xl border-dashed border-2">
-              <Users className="w-12 h-12 text-slate-200 mx-auto mb-4" />
-              <p className="text-slate-400 font-medium">No candidates found in the pool.</p>
-              <Link href="/upload" className="text-blue-600 font-bold mt-4 inline-block hover:underline">Upload your first resume &rarr;</Link>
+            <div className="text-center py-32 bg-[var(--bg-sidebar)]/30 border-dashed border-2 border-white/5 rounded-[var(--radius-xl)]">
+              <Users className="w-16 h-16 text-gray-700 mx-auto mb-6 opacity-20" />
+              <p className="text-gray-500 font-bold uppercase tracking-widest font-mono text-sm">Talent pipeline depleted.</p>
+              <Link href="/upload" className="text-[var(--accent)] font-bold mt-6 inline-block hover:underline uppercase tracking-widest font-mono text-xs">Inject New Biomass &rarr;</Link>
             </div>
           )}
         </div>

@@ -1,0 +1,30 @@
+language: en-US
+
+reviews:
+  profile: chill
+  high_level_summary: true
+  path_filters:
+    - "!node_modules/**"
+    - "!.next/**"
+    - "!.dist/**"
+    - "!**/*.lock"
+    - "!package-lock.json"
+    - "!tsconfig.tsbuildinfo"
+    - "!next-env.d.ts"
+    - "!src/app/fonts/**"
+    - "!**/*.ico"
+  path_instructions:
+    - path: "src/**/*.tsx"
+      instructions: |
+        This is a Next.js App Router project using TypeScript and React 18.
+        - Use functional components with hooks
+        - Follow existing component patterns (check src/components/ui/ for style)
+        - Prefer Tailwind CSS utility classes
+        - Use lucide-react for icons
+    - path: "src/**/*.ts"
+      instructions: |
+        TypeScript source files. Prefer explicit types over `any`.
+        Server-side code uses Supabase client. Client-side uses React Query.
+    - path: "Dockerfile"
+      instructions: |
+        Multi-stage Docker build. Ensure changes maintain the build stages.

@@ -17,14 +17,14 @@ export function StatCard({
   className?: string;
 }) {
   return (
-    <div className={cn("p-6 glass rounded-2xl flex flex-col justify-between h-40 shadow-sm border-white/50", className)}>
+    <div className={cn("p-7 bg-[var(--bg-surface)] rounded-[var(--radius-lg)] flex flex-col justify-between h-44 shadow-sm border border-[var(--border)] transition-all hover:shadow-md hover:translate-y-[-2px]", className)}>
       <div className="flex justify-between items-start">
-        <div className={cn("text-4xl font-display font-bold tracking-tight", valueColor)}>{value}</div>
+        <div className={cn("text-5xl font-mono font-bold tracking-tighter text-[var(--text-primary)]", valueColor)}>{value}</div>
         {trendData && <SparkLine data={trendData} color="var(--accent)" />}
       </div>
       <div>
-        <div className="text-[13px] font-medium text-text-primary uppercase tracking-wide-caps">{label}</div>
-        {subLabel && <div className="text-xs text-text-muted mt-1">{subLabel}</div>}
+        <div className="text-[11px] font-bold text-gray-500 uppercase tracking-[0.2em] font-mono">{label}</div>
+        {subLabel && <div className="text-[10px] text-gray-400 mt-1 font-medium">{subLabel}</div>}
       </div>
     </div>
   );

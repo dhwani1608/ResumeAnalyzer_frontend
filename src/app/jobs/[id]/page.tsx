@@ -7,7 +7,8 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchJob, fetchJobCandidates } from "@/lib/api/intelligence";
 import Link from "next/link";
 import { CandidateDrawer } from "@/components/candidates/CandidateDrawer";
-import { UploadCloud } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { UploadCloud, Plus } from "lucide-react";
 
 const COLUMNS = ["MATCHED", "REVIEWING", "SHORTLISTED", "INTERVIEWING", "OFFER"];
 
@@ -29,75 +30,72 @@ export default function JobDetail({ params }: { params: { id: string } }) {
 
   return (
     <PageShell breadcrumb={`Jobs / ${job.title}`}>
-      <div className="flex h-full overflow-hidden">
+      <div className="flex h-full overflow-hidden bg-[var(--bg-base)]">
         
         {/* Left Panel - Job Metadata */}
-        <div className="w-[280px] flex-shrink-0 bg-bg-surface border-r border-border-strong flex flex-col pt-2">
-          <div className="p-6 space-y-8 flex-1 overflow-y-auto">
-            <div>
-              <h1 className="text-xl font-display font-semibold text-text-primary tracking-tight">{job.title}</h1>
-              <div className="flex gap-2 mt-3">
-                <span className="text-[10px] font-mono tracking-wide-caps bg-bg-elevated px-2 py-0.5 rounded text-text-secondary border border-border-strong">{job.department || "General"}</span>
-                <span className="text-[10px] font-mono tracking-wide-caps bg-bg-elevated px-2 py-0.5 rounded text-text-secondary border border-border-strong">Remote</span>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-[10px] font-mono tracking-wide-caps text-text-muted mb-3 uppercase">Skills Required</h3>
+        <div className="w-[300px] flex-shrink-0 bg-[var(--bg-sidebar)] border-r border-white/5 flex flex-col pt-4">
+          <div className="p-8 space-y-10 flex-1 overflow-y-auto">
+            <div className="space-y-4">
+              <h1 className="text-3xl font-mono font-bold text-[var(--text-on-dark)] tracking-tighter uppercase leading-tight">{job.title}</h1>
               <div className="flex flex-wrap gap-2">
-                <div className="flex items-center gap-1.5 bg-bg-elevated px-2 py-1 rounded text-xs border border-border-strong text-text-primary">
-                  <div className="w-1.5 h-1.5 rounded-full bg-score-high"></div> Go
-                </div>
-                <div className="flex items-center gap-1.5 bg-bg-elevated px-2 py-1 rounded text-xs border border-border-strong text-text-primary">
-                  <div className="w-1.5 h-1.5 rounded-full bg-score-mid"></div> PostgreSQL
-                </div>
-                <div className="flex items-center gap-1.5 bg-bg-elevated px-2 py-1 rounded text-xs border border-border-strong text-text-primary">
-                  <div className="w-1.5 h-1.5 rounded-full bg-score-low"></div> Kafka
-                </div>
+                <span className="text-[10px] font-bold tracking-widest bg-white/5 px-2.5 py-1 rounded-lg text-gray-400 border border-white/5 uppercase font-mono">{job.department || "General"}</span>
+                <span className="text-[10px] font-bold tracking-widest bg-white/5 px-2.5 py-1 rounded-lg text-gray-400 border border-white/5 uppercase font-mono">REMOTE</span>
               </div>
             </div>
 
-            <div>
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-[10px] font-mono tracking-wide-caps text-text-muted uppercase">Match Threshold</h3>
-                <span className="text-xs font-mono text-accent">{threshold}</span>
+            <div className="space-y-4">
+              <h3 className="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase font-mono">Intake Requirements</h3>
+              <div className="flex flex-wrap gap-2">
+                {["Go", "PostgreSQL", "Kafka"].map((skill, i) => (
+                  <div key={i} className="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-xl text-[10px] font-bold border border-white/5 text-gray-300 uppercase tracking-widest font-mono">
+                    <div className={cn("w-1.5 h-1.5 rounded-full", i === 0 ? "bg-emerald-500" : i === 1 ? "bg-amber-500" : "bg-rose-500")}></div> {skill}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div className="flex justify-between items-center">
+                <h3 className="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase font-mono">Intelligence Threshold</h3>
+                <span className="text-xs font-bold font-mono text-[var(--accent)]">{Math.round(threshold * 100)}%</span>
               </div>
               <input 
                 type="range" 
                 min="0" max="1" step="0.05" 
                 value={threshold}
                 onChange={(e) => setThreshold(parseFloat(e.target.value))}
-                className="w-full accent-accent"
+                className="w-full accent-[var(--accent)] h-1.5 bg-white/5 rounded-lg appearance-none cursor-pointer"
               />
+              <p className="text-[10px] text-gray-500 font-medium leading-relaxed italic">Lowering the threshold reveals broader matches within the talent pool.</p>
             </div>
           </div>
           
-          <div className="p-5 border-t border-border-strong bg-bg-base mt-auto">
-            <button className="w-full py-2 border border-border-strong bg-bg-surface hover:bg-bg-hover text-sm font-medium text-text-primary rounded-md transition-colors">
-              Edit JD
+          <div className="p-6 border-t border-white/5 bg-[var(--bg-sidebar)] mt-auto">
+            <button className="w-full py-3 bg-white/5 border border-white/10 hover:bg-white/10 text-[10px] font-bold uppercase tracking-widest text-white rounded-xl transition-all font-mono">
+              MODIFY JD PARAMETERS
             </button>
           </div>
         </div>
 
         {/* Center Panel - Kanban Pipeline */}
-        <div className="flex-1 flex overflow-x-auto bg-bg-base p-6 gap-6 pt-8">
+        <div className="flex-1 flex overflow-x-auto bg-[var(--bg-base)] p-8 gap-10 pt-10">
           {COLUMNS.map((col) => {
             const colMates = candidates.filter(c => c.column === col);
             return (
-              <div key={col} className="w-[300px] flex-shrink-0 flex flex-col">
-                <div className="flex justify-between items-center mb-5 uppercase tracking-wide-caps">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-mono font-medium text-text-secondary">{col}</span>
-                    <span className="text-[10px] font-mono bg-bg-surface px-1.5 py-0.5 rounded text-text-muted border border-border-strong">{colMates.length}</span>
+              <div key={col} className="w-[320px] flex-shrink-0 flex flex-col">
+                <div className="flex justify-between items-center mb-6 uppercase tracking-[0.2em]">
+                  <div className="flex items-center gap-3">
+                    <span className="text-[11px] font-bold text-gray-500 font-mono">{col}</span>
+                    <span className="text-[10px] font-bold bg-white/5 px-2 py-0.5 rounded-lg text-gray-400 border border-white/5 font-mono">{colMates.length}</span>
                   </div>
                   {col === "MATCHED" && (
-                    <button title="Import Resumes" className="text-text-secondary hover:text-accent transition-colors bg-bg-surface border border-border-strong p-1 rounded">
-                      <UploadCloud className="w-3.5 h-3.5" />
+                    <button title="Import Resumes" className="text-gray-500 hover:text-[var(--accent)] transition-all bg-white/5 border border-white/10 p-1.5 rounded-lg">
+                      <UploadCloud className="w-4 h-4" />
                     </button>
                   )}
                 </div>
                 
-                <div className="flex-1 overflow-y-auto space-y-3 pb-6 pr-2">
+                <div className="flex-1 overflow-y-auto space-y-5 pb-8 pr-2 custom-scrollbar">
                   {colMates.map((candidate) => (
                     <CandidateCard 
                       key={candidate.id} 
@@ -106,10 +104,12 @@ export default function JobDetail({ params }: { params: { id: string } }) {
                     />
                   ))}
                   {colMates.length === 0 && (
-                    <div className="text-center py-16 border border-dashed border-border-strong rounded-sm bg-bg-surface/50">
-                      <p className="text-sm text-text-muted font-mono">No candidates yet.</p>
-                      <p className="text-sm text-text-muted mt-1">Upload some resumes or lower the match threshold.</p>
-                      <Link href="/upload" className="text-sm text-accent mt-4 inline-block">Upload resumes &rarr;</Link>
+                    <div className="text-center py-20 border-2 border-dashed border-white/5 rounded-[var(--radius-xl)] bg-white/[0.02]">
+                      <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
+                        <Plus className="w-6 h-6 text-gray-600" />
+                      </div>
+                      <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest font-mono">No active matches</p>
+                      <Link href="/upload" className="text-[10px] font-bold text-[var(--accent)] mt-4 inline-block uppercase tracking-widest hover:underline underline-offset-4">Inject Resumes &rarr;</Link>
                     </div>
                   )}
                 </div>

@@ -8,30 +8,29 @@ interface Experience {
 
 export function CandidateTimeline({ experiences = [] }: { experiences?: Experience[] }) {
   if (!experiences || experiences.length === 0) {
-    return <div className="text-sm font-mono text-text-muted">No experience entries found.</div>;
+    return <div className="text-[10px] font-bold font-mono text-gray-400 uppercase tracking-widest">NO_EXPERIENCE_TELEMETRY</div>;
   }
 
-
   return (
-    <div className="space-y-8">
+    <div className="space-y-12">
       {experiences.map((exp, i) => (
-        <div key={i} className="relative pl-6">
-          <div className="absolute left-[-3px] top-1.5 w-2 h-2 rounded-full bg-accent ring-4 ring-bg-surface z-10" />
+        <div key={i} className="relative pl-10 group">
+          <div className="absolute left-[-5px] top-2 w-3 h-3 rounded-full bg-[var(--accent)] ring-8 ring-white group-hover:ring-[var(--accent)]/20 transition-all z-10 border-2 border-white" />
           {i !== experiences.length - 1 && (
-            <div className="absolute left-[0px] top-4 w-px h-[calc(100%+2rem)] bg-border-strong" />
+            <div className="absolute left-[0px] top-6 w-px h-[calc(100%+3rem)] bg-gray-100" />
           )}
           
-          <div className="flex justify-between items-baseline mb-1">
-            <h4 className="text-[15px] font-semibold text-text-primary tracking-tight">{exp.company}</h4>
-            <span className="text-xs font-mono text-text-muted">{exp.dates}</span>
+          <div className="flex justify-between items-baseline mb-2">
+            <h4 className="text-xl font-bold text-[var(--text-primary)] tracking-tight">{exp.company}</h4>
+            <span className="text-[10px] font-bold font-mono text-gray-400 uppercase tracking-widest">{exp.dates}</span>
           </div>
-          <div className="text-sm font-medium text-accent mb-3">{exp.role}</div>
-          <p className="text-[13px] text-text-secondary leading-relaxed mb-4">
+          <div className="text-[10px] font-bold text-[var(--accent)] mb-4 font-mono uppercase tracking-[0.2em]">{exp.role}</div>
+          <p className="text-sm text-gray-600 leading-relaxed mb-6 font-medium">
             {exp.description}
           </p>
           <div className="flex flex-wrap gap-2">
              {exp.skills.map(s => (
-               <span key={s} className="px-2 py-0.5 text-[10px] font-mono tracking-wide-caps uppercase rounded bg-bg-elevated text-text-muted border border-border-strong group hover:bg-tag-bg hover:text-text-primary hover:border-tag-border cursor-default transition-colors">
+               <span key={s} className="px-3 py-1.5 text-[9px] font-bold font-mono uppercase tracking-widest rounded-lg bg-[var(--bg-base)] text-white border border-white/5 group-hover:border-[var(--accent)]/30 transition-colors">
                  {s}
                </span>
              ))}

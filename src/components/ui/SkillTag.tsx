@@ -15,10 +15,10 @@ export function SkillTag({
     <div
       title={tooltip}
       className={cn(
-        "inline-flex items-center px-2 py-0.5 text-[11px] font-medium rounded-md",
+        "inline-flex items-center px-2 py-0.5 text-[10px] font-bold rounded-md uppercase tracking-wider",
         variant === "confirmed"
-          ? "bg-tag-bg text-text-primary border border-tag-border"
-          : "bg-transparent text-text-secondary border border-dashed border-text-muted cursor-help",
+          ? "bg-gray-100 text-[var(--text-primary)] border border-gray-200"
+          : "bg-transparent text-gray-400 border border-dashed border-gray-300 cursor-help",
         className
       )}
     >

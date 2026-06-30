@@ -48,124 +48,134 @@ export default function CandidateProfile({ params }: { params: { id: string } })
 
   return (
     <PageShell breadcrumb={`Candidates / ${candidate.name}`}>
-      <div className="flex flex-col lg:flex-row h-full overflow-hidden divide-y lg:divide-y-0 lg:divide-x divide-border-strong bg-bg-surface">
+      <div className="flex flex-col lg:flex-row h-full overflow-hidden divide-y lg:divide-y-0 lg:divide-x divide-white/5 bg-[var(--bg-base)]">
         
-        {/* Left - Resume View (40%) */}
-        <div className="w-full lg:w-[45%] flex-shrink-0 lg:h-full overflow-y-auto p-10 space-y-12">
+        {/* Left - Human Intelligence View (Cream) */}
+        <div className="w-full lg:w-[45%] flex-shrink-0 lg:h-full overflow-y-auto p-12 space-y-16 bg-[var(--bg-surface)] border-r border-[var(--border)]">
           
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div className="flex justify-between items-start">
-              <div>
-                <h1 className="text-3xl font-display font-semibold text-text-primary tracking-tight">{candidate.name}</h1>
-                <div className="text-sm text-text-secondary mt-1 tracking-tight">{candidate.title} &bull; {candidate.location} &bull; {candidate.email}</div>
+              <div className="font-mono">
+                <h1 className="text-5xl font-bold tracking-tighter text-[var(--text-primary)] uppercase">{candidate.name}</h1>
+                <div className="text-[10px] font-bold text-[var(--accent)] mt-3 tracking-[0.25em] uppercase border border-[var(--accent)]/10 bg-[var(--accent)]/5 px-4 py-1.5 rounded-full inline-block">
+                  {candidate.title} • {candidate.location}
+                </div>
               </div>
-              <div className="flex gap-2">
-                <button className="flex items-center gap-2 text-xs px-3 py-1.5 border border-border-strong rounded-sm hover:bg-bg-hover transition-colors font-medium">
-                  <Download className="w-3.5 h-3.5" />
-                  TXT
-                </button>
-              </div>
+              <button className="flex items-center gap-2 text-[10px] px-4 py-2 bg-[var(--bg-sidebar)] text-white rounded-[var(--radius-lg)] hover:bg-[var(--accent)] hover:text-[var(--bg-sidebar)] transition-all font-bold uppercase tracking-widest font-mono shadow-2xl">
+                <Download className="w-4 h-4" />
+                Dumping_TX
+              </button>
             </div>
             
-            <p className="text-[14px] text-text-primary leading-relaxed pt-2">
-              {candidate.summary}
+            <p className="text-lg text-gray-700 leading-relaxed pt-4 font-medium italic border-l-4 border-[var(--accent)]/30 pl-8">
+              "{candidate.summary}"
             </p>
           </div>
 
           <div>
-            <h2 className="text-[10px] font-mono text-text-muted mb-6 uppercase tracking-wide-caps border-b border-border-strong pb-3">Experience</h2>
+            <h2 className="text-[10px] font-bold font-mono text-gray-400 mb-10 uppercase tracking-[0.3em] flex items-center gap-4">
+              <span className="h-px flex-1 bg-gray-100" />
+              Professional_Timeline
+              <span className="h-px flex-1 bg-gray-100" />
+            </h2>
             <CandidateTimeline experiences={candidate.experiences} />
           </div>
 
           <div>
-             <h2 className="text-[10px] font-mono text-text-muted mb-6 uppercase tracking-wide-caps border-b border-border-strong pb-3">Education</h2>
-             <div className="space-y-4">
+             <h2 className="text-[10px] font-bold font-mono text-gray-400 mb-10 uppercase tracking-[0.3em] flex items-center gap-4">
+                <span className="h-px flex-1 bg-gray-100" />
+                Academic_Credentials
+                <span className="h-px flex-1 bg-gray-100" />
+             </h2>
+             <div className="space-y-6">
                 {candidate.education.length > 0 ? candidate.education.map((edu: any, i: number) => (
-                  <div key={i} className="pl-6 border-l-[3px] border-border-strong rounded-sm rounded-l-none">
-                    <div className="flex justify-between items-baseline mb-1">
-                      <h4 className="text-[15px] font-semibold text-text-primary tracking-tight">{edu.institution}</h4>
-                      <span className="text-xs font-mono text-text-muted">{edu.years}</span>
+                   <div key={i} className="p-6 bg-gray-50 border border-gray-100 rounded-[var(--radius-lg)] shadow-sm hover:shadow-md transition-all">
+                    <div className="flex justify-between items-baseline mb-2">
+                       <h4 className="text-lg font-bold text-[var(--text-primary)] tracking-tight">{edu.institution}</h4>
+                       <span className="text-[10px] font-bold font-mono text-gray-400 uppercase">{edu.years}</span>
                     </div>
-                    <div className="text-[13px] font-medium text-text-secondary blur-0">{edu.degree} {edu.description && `• ${edu.description}`}</div>
-                  </div>
+                    <div className="text-sm font-bold text-[var(--accent)] uppercase tracking-widest font-mono">{edu.degree}</div>
+                    {edu.description && <div className="text-sm text-gray-500 mt-2 font-medium">{edu.description}</div>}
+                   </div>
                 )) : (
-                  <div className="text-sm font-mono text-text-muted">No education found.</div>
+                  <div className="text-[10px] font-bold font-mono text-gray-400 uppercase tracking-widest text-center py-10 border-2 border-dashed border-gray-100 rounded-[var(--radius-lg)]">NO_ACADEMIC_DATA</div>
                 )}
              </div>
           </div>
         </div>
 
-        {/* Right - Intelligence Panel (60%) */}
-        <div className="flex-1 lg:h-full bg-bg-base overflow-y-auto p-10 space-y-10">
+        {/* Right - AI Intelligence Panel (Charcoal) */}
+        <div className="flex-1 lg:h-full bg-[var(--bg-base)] overflow-y-auto p-12 space-y-12">
           
-          {/* Score Summary */}
-          <div className="flex items-center gap-6 bg-bg-surface p-6 rounded-sm border border-border-strong">
-             <div>
+          {/* Intelligence Score */}
+          <div className="flex items-center gap-8 bg-[var(--bg-sidebar)] p-10 rounded-[var(--radius-xl)] border border-white/5 shadow-3xl group hover:border-[var(--accent)]/20 transition-all">
+             <div className="scale-150 transform">
                <ScorePill score={82} />
              </div>
-             <div>
-               <h3 className="text-xl font-display tracking-tight text-text-primary font-semibold">Matched Candidate Profile</h3>
-               <p className="text-[13px] text-text-secondary mt-1.5 leading-relaxed">System has parsed {candidate.skills.length} core technical skills from this resume. Analysis indicates readiness for screening.</p>
+             <div className="font-mono">
+               <h3 className="text-2xl font-bold tracking-tighter text-white uppercase italic">Matched_Intelligence_Profile</h3>
+               <p className="text-xs text-gray-500 mt-3 leading-loose font-bold uppercase tracking-widest">
+                 System recognized {candidate.skills.length} core technical vectors. <br/>
+                 Heuristic analysis indicates 82% compatibility with target profile.
+               </p>
              </div>
           </div>
 
-          {/* Radar & Skills Split */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <h3 className="text-[10px] font-mono tracking-wide-caps text-text-secondary uppercase">Skill Distribution</h3>
-              <div className="border border-border-strong rounded-sm bg-bg-surface py-6">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
+            <div className="space-y-6">
+              <h3 className="text-[10px] font-bold font-mono tracking-[0.25em] text-gray-500 uppercase">Neural_Skill_Distribution</h3>
+              <div className="border border-white/5 rounded-[var(--radius-lg)] bg-[var(--bg-sidebar)]/50 p-8 shadow-2xl backdrop-blur-xl">
                  <SkillRadar />
               </div>
             </div>
             
-            <div className="space-y-8">
-               <div className="space-y-4">
-                 <h3 className="text-[10px] font-mono tracking-wide-caps text-text-secondary uppercase border-b border-border-strong pb-2">Confirmed Skills</h3>
-                 <div className="flex flex-wrap gap-2">
-                   {!isReady ? <Loader2 className="w-4 h-4 animate-spin text-text-muted" /> : candidate.skills.map((s: string) => <SkillTag key={s} label={s} variant="confirmed" />)}
+            <div className="space-y-10">
+               <div className="space-y-6">
+                 <h3 className="text-[10px] font-bold font-mono tracking-[0.25em] text-gray-500 uppercase border-b border-white/5 pb-4">Validated_Skill_Matrix</h3>
+                 <div className="flex flex-wrap gap-3">
+                   {!isReady ? <Loader2 className="w-6 h-6 animate-spin text-[var(--accent)]" /> : candidate.skills.map((s: string) => <SkillTag key={s} label={s} variant="confirmed" />)}
                  </div>
                </div>
 
-               <div className="space-y-4">
-                 <h3 className="text-[10px] font-mono tracking-wide-caps text-text-secondary uppercase border-b border-border-strong pb-2">Inferred Skills</h3>
-                 <div className="flex flex-wrap gap-2">
-                   {!isReady ? <Loader2 className="w-4 h-4 animate-spin text-text-muted" /> : candidate.implied_skills.map((item: any) => (
+               <div className="space-y-6">
+                 <h3 className="text-[10px] font-bold font-mono tracking-[0.25em] text-gray-500 uppercase border-b border-white/5 pb-4">Inferred_Talent_Vectors</h3>
+                 <div className="flex flex-wrap gap-3">
+                   {!isReady ? <Loader2 className="w-6 h-6 animate-spin text-[var(--accent)]" /> : candidate.implied_skills.map((item: any) => (
                       <SkillTag key={item.s} label={item.s} variant="inferred" tooltip={item.t} />
                    ))}
-                 </div>
+                  </div>
                </div>
             </div>
           </div>
 
-          {/* Match History */}
-          <div className="space-y-4">
-             <div className="flex justify-between items-center border-b border-border-strong pb-2">
-               <h3 className="text-[10px] font-mono tracking-wide-caps text-text-secondary uppercase">Match History</h3>
-               <button className="text-[10px] font-mono tracking-wide-caps font-medium text-accent hover:text-accent-hover transition-colors">RUN ANALYSIS</button>
+          <div className="space-y-6">
+             <div className="flex justify-between items-center border-b border-white/5 pb-4">
+               <h3 className="text-[10px] font-bold font-mono tracking-[0.25em] text-gray-500 uppercase">Match_Telemetry_History</h3>
+               <button className="text-[10px] font-bold font-mono tracking-[0.2em] text-[var(--accent)] hover:text-white transition-all uppercase underline-offset-8 underline">RERUN_DIAGNOSTICS</button>
              </div>
              
-             <div className="border border-border-strong rounded-sm bg-bg-surface overflow-hidden">
+             <div className="border border-white/5 rounded-[var(--radius-lg)] bg-[var(--bg-sidebar)] overflow-hidden shadow-3xl">
                <table className="w-full text-left text-sm whitespace-nowrap">
-                  <thead className="bg-bg-base/50 text-text-secondary text-[10px] uppercase font-mono tracking-wide-caps border-b border-border-strong">
+                  <thead className="bg-[#111] text-gray-500 text-[10px] uppercase font-bold font-mono tracking-widest border-b border-white/5">
                     <tr>
-                      <th className="px-5 py-3.5">Role</th>
-                      <th className="px-5 py-3.5">Score</th>
-                      <th className="px-5 py-3.5">Current Stage</th>
-                      <th className="px-5 py-3.5 text-right">Matched On</th>
+                      <th className="px-8 py-5">PROFILE_TARGET</th>
+                      <th className="px-8 py-5">MAGNITUDE</th>
+                      <th className="px-8 py-5">STATUS</th>
+                      <th className="px-8 py-5 text-right">TIMESTAMP</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-border-strong">
-                    <tr className="hover:bg-bg-hover transition-colors">
-                      <td className="px-5 py-3 font-medium text-text-primary">Senior Backend Engineer</td>
-                      <td className="px-5 py-3"><ScorePill score={82} /></td>
-                      <td className="px-5 py-3"><StatusChip status="ACTIVE" /></td>
-                      <td className="px-5 py-3 font-mono text-xs text-text-muted text-right">Oct 12</td>
+                  <tbody className="divide-y divide-white/5 font-mono">
+                    <tr className="hover:bg-white/5 transition-all group">
+                      <td className="px-8 py-6 font-bold text-white group-hover:text-[var(--accent)]">Senior Backend Engineer</td>
+                      <td className="px-8 py-6"><ScorePill score={82} /></td>
+                      <td className="px-8 py-6"><StatusChip status="ACTIVE" /></td>
+                      <td className="px-8 py-6 text-xs text-gray-500 text-right">OCT_12</td>
                     </tr>
-                    <tr className="hover:bg-bg-hover transition-colors">
-                      <td className="px-5 py-3 font-medium text-text-primary">DevOps Engineer</td>
-                      <td className="px-5 py-3"><ScorePill score={55} /></td>
-                      <td className="px-5 py-3"><StatusChip status="CLOSED" /></td>
-                      <td className="px-5 py-3 font-mono text-xs text-text-muted text-right">Sep 28</td>
+                    <tr className="hover:bg-white/5 transition-all group">
+                      <td className="px-8 py-6 font-bold text-white group-hover:text-[var(--accent)]">DevOps Engineer</td>
+                      <td className="px-8 py-6"><ScorePill score={55} /></td>
+                      <td className="px-8 py-6"><StatusChip status="CLOSED" /></td>
+                      <td className="px-8 py-6 text-xs text-gray-500 text-right">SEP_28</td>
                     </tr>
                   </tbody>
                </table>

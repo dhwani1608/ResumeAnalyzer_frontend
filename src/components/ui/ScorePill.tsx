@@ -2,11 +2,11 @@ interface Props { score: number }
 
 export function ScorePill({ score }: Props) {
   const styles =
-    score >= 75
-      ? { bg: '#ECFDF5', color: '#059669', border: '#10B98133' }
-      : score >= 50
-      ? { bg: '#FFFBEB', color: '#D97706', border: '#F59E0B33' }
-      : { bg: '#FEF2F2', color: '#DC2626', border: '#EF444433' }
+    score >= 85
+      ? { bg: '#F0FDF4', color: '#16A34A', border: '#16A34A20' }
+      : score >= 60
+      ? { bg: '#FFFBEB', color: '#B45309', border: '#F4B40030' }
+      : { bg: '#FEF2F2', color: '#DC2626', border: '#DC262620' };
 
   return (
     <span style={{
