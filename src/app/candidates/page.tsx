@@ -2,18 +2,38 @@
 
 import { PageShell } from "@/components/layout/PageShell";
 import { ScorePill } from "@/components/ui/ScorePill";
-import { Users, Search, Filter, ArrowRight, Loader2 } from "lucide-react";
+import { Users, ArrowRight, Loader2, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCandidates } from "@/lib/api/intelligence";
+import { CandidateSearch } from "@/components/candidates/CandidateSearch";
+import { useState, useEffect } from "react";
 
 export default function CandidatesPage() {
-  const { data, isLoading } = useQuery({ 
+  const { data, isLoading, error } = useQuery({ 
     queryKey: ["candidates"], 
     queryFn: fetchCandidates 
   });
   
   const candidates = data?.candidates || [];
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (error) {
+    return (
+      <PageShell breadcrumb="Candidates">
+        <div className="p-12 max-w-[1500px] mx-auto">
+          <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-lg text-red-600">
+            <AlertCircle className="w-5 h-5" />
+            <span>Failed to load candidates. Please try again later.</span>
+          </div>
+        </div>
+      </PageShell>
+    );
+  }
 
   return (
     <PageShell breadcrumb="Candidates">
@@ -24,21 +44,9 @@ export default function CandidatesPage() {
             <h1 className="text-5xl font-bold tracking-tighter text-[var(--text-on-dark)] uppercase">Talent Reservoir</h1>
             <p className="text-gray-500 font-medium text-lg">Inventory of {candidates.length} processed high-potential scouts.</p>
           </div>
-          
-          <div className="flex items-center gap-4">
-            <div className="relative group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-[var(--accent)] transition-colors" />
-              <input 
-                type="text" 
-                placeholder="PROBE CANDIDATES..."
-                className="bg-[var(--bg-sidebar)] border border-white/5 rounded-[var(--radius-lg)] py-3.5 pl-12 pr-6 text-sm text-white focus:border-[var(--accent)] outline-none transition-all w-72 shadow-2xl font-mono"
-              />
-            </div>
-            <button className="flex items-center gap-2 px-5 py-3.5 bg-[var(--bg-sidebar)] border border-white/5 rounded-[var(--radius-lg)] text-[10px] font-bold text-gray-400 uppercase tracking-widest hover:bg-[var(--bg-sidebar)]/80 hover:text-white transition-all shadow-xl font-mono">
-              <Filter className="w-4 h-4" /> Filter
-            </button>
-          </div>
         </div>
+
+        <CandidateSearch />
 
         <div className="grid grid-cols-1 gap-6">
           {isLoading ? (
